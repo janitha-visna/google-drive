@@ -33,14 +33,14 @@ export function FileGrid({
   const files = items.filter((i) => i.type !== "folder");
 
   return (
-    <div className="flex flex-col gap-8 pb-12">
+    <div className="flex flex-col gap-6 pb-12">
       {folders.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-4 px-1">
+          <h2 className="mb-3 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Folders
           </h2>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {folders.map((folder) => (
               <FileCard
                 key={folder.id}
@@ -55,11 +55,11 @@ export function FileGrid({
 
       {files.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mb-4 px-1">
+          <h2 className="mb-3 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Files
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {files.map((file) => (
               <FileCard key={file.id} item={file} onModify={onModify} />
             ))}
