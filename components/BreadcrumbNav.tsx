@@ -18,34 +18,40 @@ interface BreadcrumbNavProps {
 export function BreadcrumbNav({ path, onNavigate }: BreadcrumbNavProps) {
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="text-lg font-medium">
         <BreadcrumbItem>
-          <BreadcrumbLink 
-            href="#" 
-            onClick={(e) => { e.preventDefault(); onNavigate(null); }}
-            className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+          <BreadcrumbLink
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate(null);
+            }}
+            className="flex items-center gap-2 text-lg hover:text-primary transition-colors"
           >
-            <Home className="w-4 h-4" />
-            <span className="sr-only sm:not-sr-only sm:ml-1 text-sm font-medium">Home</span>
+            <Home className="w-6 h-6" />
+            <span className="sr-only sm:not-sr-only">Home</span>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        
+
         {path.map((folder, index) => {
           const isLast = index === path.length - 1;
-          
+
           return (
             <Fragment key={folder.id}>
-              <BreadcrumbSeparator />
+              <BreadcrumbSeparator className="text-lg" />
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage className="font-semibold text-blue-900 dark:text-blue-400">
+                  <BreadcrumbPage className="text-lg font-semibold text-primary">
                     {folder.name}
                   </BreadcrumbPage>
                 ) : (
-                  <BreadcrumbLink 
-                    href="#" 
-                    onClick={(e) => { e.preventDefault(); onNavigate(folder.id); }}
-                    className="hover:text-blue-600 transition-colors"
+                  <BreadcrumbLink
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigate(folder.id);
+                    }}
+                    className="text-lg hover:text-primary transition-colors"
                   >
                     {folder.name}
                   </BreadcrumbLink>

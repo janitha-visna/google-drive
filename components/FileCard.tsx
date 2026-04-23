@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { MoreVertical, Trash2, Edit2, RotateCcw, Eye } from "lucide-react";
+import { Card, CardContent } from "./ui/card";
 
 interface FileCardProps {
   item: FileItem;
@@ -126,88 +127,85 @@ export function FileCard({
   }
 
   return (
-    <div
+    <Card
       onClick={handleClick}
-      className="group flex items-center justify-between rounded-xl border border-zinc-200 bg-white px-3 py-2.5 shadow-sm transition-all hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700 dark:hover:bg-zinc-900 cursor-pointer"
+      className="group cursor-pointer transition-colors hover:bg-accent"
     >
-      <div className="flex min-w-0 items-center gap-3">
-        <div className="shrink-0">
-          {getIconForType(item.type, "w-4.5 h-4.5")}
+      <CardContent className="flex items-center justify-between px-3 py-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="shrink-0">{getIconForType(item.type, "h-4 w-4")}</div>
+
+          <span className="truncate text-sm font-medium" title={item.name}>
+            {item.name}
+          </span>
         </div>
 
-        <span
-          className="truncate text-sm font-medium text-zinc-800 dark:text-zinc-100"
-          title={item.name}
-        >
-          {item.name}
-        </span>
-      </div>
+        {onModify && (
+          <div onClick={(e) => e.stopPropagation()} className="shrink-0">
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    className="opacity-0 group-hover:opacity-100 focus:opacity-100"
+                  />
+                }
+              >
+                <MoreVertical className="w-4 h-4 text-zinc-500" />
+              </DropdownMenuTrigger>
 
-      {onModify && (
-        <div onClick={(e) => e.stopPropagation()} className="shrink-0">
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="opacity-0 group-hover:opacity-100 focus:opacity-100"
-                />
-              }
-            >
-              <MoreVertical className="w-4 h-4 text-zinc-500" />
-            </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {!item.isDeleted && (
+                  <>
+                    {!isFolder && (
+                      <DropdownMenuItem>
+                        <Eye className="w-4 h-4 mr-2" />
+                        Preview
+                      </DropdownMenuItem>
+                    )}
 
-            <DropdownMenuContent align="end" className="w-48">
-              {!item.isDeleted && (
-                <>
-                  {!isFolder && (
-                    <DropdownMenuItem>
-                      <Eye className="w-4 h-4 mr-2" />
-                      Preview
+                    <DropdownMenuItem
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onModify(item, "rename");
+                      }}
+                    >
+                      <Edit2 className="w-4 h-4 mr-2" />
+                      Rename
                     </DropdownMenuItem>
-                  )}
 
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onModify(item, "trash");
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Move to Trash
+                    </DropdownMenuItem>
+                  </>
+                )}
+
+                {item.isDeleted && (
                   <DropdownMenuItem
                     onClick={(e) => {
                       e.stopPropagation();
-                      onModify(item, "rename");
+                      onModify(item, "restore");
                     }}
                   >
-                    <Edit2 className="w-4 h-4 mr-2" />
-                    Rename
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Restore
                   </DropdownMenuItem>
-
-                  <DropdownMenuSeparator />
-
-                  <DropdownMenuItem
-                    variant="destructive"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onModify(item, "trash");
-                    }}
-                  >
-                    <Trash2 className="w-4 h-4 mr-2" />
-                    Move to Trash
-                  </DropdownMenuItem>
-                </>
-              )}
-
-              {item.isDeleted && (
-                <DropdownMenuItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onModify(item, "restore");
-                  }}
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Restore
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )}
-    </div>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

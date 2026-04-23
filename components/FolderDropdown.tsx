@@ -26,7 +26,7 @@ export function FolderDropdown({ currentFolder, folders, onNavigate }: FolderDro
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="inline-flex h-8 items-center justify-center gap-1 rounded-md px-3 text-xs font-medium hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 ml-1 text-zinc-600 dark:text-zinc-300 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300">
+      <DropdownMenuTrigger className="inline-flex h-9 items-center justify-center gap-1 rounded-md px-3 text-sm font-medium hover:bg-accent transition-colors">
         <span className="sr-only sm:not-sr-only">Quick Jump</span>
         <ChevronDown className="h-4 w-4" />
       </DropdownMenuTrigger>
@@ -38,10 +38,15 @@ export function FolderDropdown({ currentFolder, folders, onNavigate }: FolderDro
           </DropdownMenuItem>
         )}
         {childFolders.length === 0 ? (
-          <div className="p-2 text-xs text-center text-zinc-500">No subfolders</div>
+          <div className="p-2 text-xs text-center text-zinc-500">
+            No subfolders
+          </div>
         ) : (
           childFolders.map((folder) => (
-            <DropdownMenuItem key={folder.id} onClick={() => onNavigate(folder.id)}>
+            <DropdownMenuItem
+              key={folder.id}
+              onClick={() => onNavigate(folder.id)}
+            >
               <FolderIcon className="mr-2 h-4 w-4 text-blue-400" />
               <span className="truncate">{folder.name}</span>
             </DropdownMenuItem>
